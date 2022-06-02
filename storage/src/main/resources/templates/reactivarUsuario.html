@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentsCabecera::header"/>
+<body>
+	<div th:replace="fragmentsCabecera::menu"></div>
+	<div class="container">
+		<h3 class="form-heading text-center p-2" th:text="#{reactivar.titulo}"></h3>
+	</div>
+	<div class="container">
+		<table class="table">
+			<thead class="table-garaje">
+				<tr>
+					<th scope="col" th:text="#{etiqueta.usuario}"></th>
+					<th scope="col" th:text="#{etiqueta.email}"></th>
+					<th scope="col" th:text="#{etiqueta.estado}"></th>
+					<th scope="col" class="opciones" th:text="#{etiqueta.opciones}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${userForm.empty}">
+					<td colspan="4" style="text-align: center;">No hay usuarios bloqueados</td>
+				</tr>
+				<tr th:each="usuario : ${userForm}">
+					<td th:text="${usuario.nombre}"></td>
+					<td th:text="${usuario.email}"></td>
+					<td th:text="${usuario.esactivo =='S'}? #{etiqueta.activo}:#{etiqueta.bloqueado}"></td>
+					<td>
+					<a th:href="@{/reactivarUsuario/} + ${usuario.idusuario}">
+					<img th:src="@{/images/boton-verde.png}" id="imagen" class="img-circle" 
+					th:title="#{title.activar}" th:alt="#{title.activar}"/>
+					</a></td>
+				</tr>
+			</tbody>
+
+		</table>
+
+	</div>
+</body>
+</html>

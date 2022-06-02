@@ -1,0 +1,128 @@
+body {
+    padding-top: 10px;
+    padding-bottom: 40px;
+    background-color: white;
+}
+
+.form-general {
+    padding: 15px;
+    margin: 0 auto;
+    background-color: #f5cfa2;
+}
+
+.form-signin {
+    max-width: 55%;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input {
+    margin-top: 10px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin button {
+    margin-top: 10px;
+}
+
+.has-error {
+    color: #bd2130;
+    font-weight: bold;
+}
+
+.is-ok {
+    color: green;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #3c7c4b;
+    border-color: #3c7c4b;
+}
+
+.table-garaje
+{
+	background-color: #f5cfa2;
+}
+
+.listaCat
+{
+	padding-top:0;
+	padding-bottom:0;
+}
+
+.subListaCat
+{
+	padding-inline-start:2em;
+	padding-top:0;
+	padding-bottom:0;
+}
+.col3
+{
+	width: 3%;
+	padding-right: 0.2em;
+}
+.col10
+{
+	width: 10%;
+	padding-right: 0.2em;
+}
+.col12
+{
+	width: 12%;
+	padding-right: 0.2em;
+}
+.col13
+{
+	width: 13%;
+	padding-right: 0.2em;
+}
+
+.col20
+{
+	width: 20%;
+	padding-right: 0.2em;
+}
+
+.header
+{
+	background-color: #3c7c4b;
+	padding-top: 1em;
+	padding-bottom:1em;
+	margin-bottom: 1em;
+}
+
+.btn-header
+{
+	background-color:#3c7c4b;
+	border-color: white;
+	color:white;
+}
+#imagenEliminar
+{
+	cursor:pointer;	
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragmentsCabecera::header"/>
+  <body>
+	<div th:replace="fragmentsCabecera::menu"></div>
+    <div class="container">
+	        <form method="POST" class="form-general" th:object="${objetoForm}" th:action="@{/nuevoObjeto}" 
+	        enctype="multipart/form-data">
+	            <h3 class="form-heading text-center p-2" th:text="#{titulo.objeto.detalle}"></h3>	            
+	            <div class="row g-4 align-items-center">
+				  <div class="col-2">
+				    <label for="inputNombre" class="col-form-label" th:text="#{etiqueta.nombre}"></label>
+				  </div>
+				  <div class="col-4">
+				    <input type="text" th:field="*{nombre}" class="form-control" readonly="readonly">
+				  </div>
+				  <div class="col-2">
+				    <label for="inputDescripcion" class="col-form-label" th:text="#{etiqueta.descripcion}"></label>
+				  </div>
+				  <div class="col-4">
+				    <textarea class="form-control" th:field="*{descripcion}" rows="3" readonly="readonly"></textarea>
+				  </div>
+				</div>
+	            <br>
+				<div class="row g-4 align-items-center">
+				  <div class="col-2">
+				    <label for="inputCategoria" class="col-form-label" th:text="#{etiqueta.categoria}"></label>
+				  </div>
+				  <div class="col-4">
+				  	<input type="text" th:field="*{categoria.nombre}" class="form-control" readonly="readonly">		
+				  </div>
+				  <div class="col-2">
+				    <label for="inputMarca" class="col-form-label" th:text="#{etiqueta.marca}"></label>
+				  </div>
+				  <div class="col-4">
+				    <input type="text" th:field="*{marca}" class="form-control" readonly="readonly">
+				  </div>
+				</div> 
+				<br>
+				<div th:if="${contentImage != null}" style="text-align: center;">
+			  		<img id="imagenGuardada" style="max-width: 150px;" th:src="@{data:image;base64,}+${contentImage}"/>
+			  	</div>	
+				<br>
+	        </form>
+    </div>
+
+  </body>
+</html>

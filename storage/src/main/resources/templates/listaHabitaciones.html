@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentsCabecera::header"/>
+<body>
+	<div th:replace="fragmentsCabecera::menu"></div>
+	<div class="container">
+		<h3 class="form-heading text-center p-2" th:text="#{titulo.habitaciones}"></h3>
+	</div>
+	<div class="container">
+		<table class="table">
+			<thead class="table-garaje">
+				<tr>
+					<th width="30%" scope="col" th:text="#{etiqueta.nombre}"></th>
+					<th width="50%" scope="col" th:text="#{etiqueta.descripcion}"></th>
+					<th width="20%" class="opciones" scope="col" th:text="#{etiqueta.opciones}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${estanciaForm.empty}">
+					<td colspan="3" style="text-align: center;">No hay estancias disponibles</td>
+				</tr>
+				<tr th:each="estancia : ${estanciaForm}">
+					<td th:text="${estancia.nombre}"></td>
+					<td th:text="${estancia.descripcion}"></td>
+					<td>
+					<a th:href="@{/listarEstanterias/} + ${estancia.idestancia}">
+					<img th:src="@{/images/detalle20.png}" id="imagen" class="img-circle" 
+					th:title="#{title.estancia.detalle}" th:alt="#{title.estancia.detalle}"/>
+					</a>&nbsp;
+					<a th:href="@{/modificarHabitacion/} + ${estancia.idestancia}">
+					<img th:src="@{/images/editar20.png}" id="imagen" class="img-circle" 
+					th:title="#{title.estancia.modificar}" th:alt="#{title.estancia.modificar}"/>
+					</a>&nbsp;
+					<a th:href="@{/eliminarHabitacion/} + ${estancia.idestancia}">
+					<img th:src="@{/images/eliminar20.png}" id="imagen" class="img-circle" 
+					th:title="#{title.estancia.eliminar}" th:alt="#{title.estancia.eliminar}"/>
+					</a></td>
+				</tr>
+			</tbody>
+
+		</table>
+		
+
+	</div>
+	<div class="d-flex justify-content-sm-center">
+	<a class="btn btn-primary" href="/nuevaHabitacion" role="button" th:text="#{boton.nueva}" 
+	th:title="#{title.boton.estancia.nueva}" th:alt="#{title.boton.estancia.nueva}"></a>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragmentsCabecera::header"/>
+<body> 
+  <div th:replace="fragmentsCabecera::menu"></div>
+  <div class="container">
+  <h5 class="form-heading text-center p-2 is-ok" th:if="${mensaje}!=null" th:text="${mensaje}"></h5>
+  <h5 class="form-heading text-center p-2 has-error" th:if="${error}!=null" th:text="${error}"></h5>
+  </div>
+</body>
+</html>

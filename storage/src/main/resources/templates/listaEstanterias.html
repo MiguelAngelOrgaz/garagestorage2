@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentsCabecera::header"/>
+<body>
+	<div th:replace="fragmentsCabecera::menu"></div>
+	<div class="container">
+		<h3 class="form-heading text-center p-2" th:text="#{titulo.estanterias}+ @{&nbsp;} + ${estanciaNombre}"></h3>
+	</div>
+	<div class="container">
+		<table class="table">
+			<thead class="table-garaje">
+				<tr>
+					<th width="30%" scope="col" th:text="#{etiqueta.nombre}"></th>
+					<th width="50%" scope="col" th:text="#{etiqueta.descripcion}"></th>
+					<th width="20%" scope="col" class="opciones" th:text="#{etiqueta.opciones}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${estanteriaForm.empty}">
+					<td colspan="3" style="text-align: center;">No hay estanterías disponibles</td>
+				</tr>
+				<tr th:each="estanteria : ${estanteriaForm}">
+					<td th:text="${estanteria.nombre}"></td>
+					<td th:text="${estanteria.descripcion}"></td>
+					<td>
+					<a th:href="@{/obtenerEstanteria/} + ${estanteria.idestanteria}">
+					<img th:src="@{/images/detalle20.png}" id="imagen" class="img-circle" 
+					th:title="#{title.estanteria.detalle}" th:alt="#{title.estanteria.detalle}"/>
+					</a>&nbsp;
+					<a th:href="@{/modificarEstanteria/} + ${estanteria.idestanteria}">
+					<img th:src="@{/images/editar20.png}" id="imagen" class="img-circle" 
+					th:title="#{title.estanteria.modificar}" th:alt="#{title.estanteria.modificar}"/>
+					</a>&nbsp;
+					<a th:href="@{/eliminarEstanteria/} + ${estanteria.idestanteria}">
+					<img th:src="@{/images/eliminar20.png}" id="imagen" class="img-circle" 
+					th:title="#{title.estanteria.eliminar}" th:alt="#{title.estanteria.eliminar}"/>
+					</a></td>
+				</tr>
+			</tbody>
+
+		</table>
+		
+
+	</div>
+	<div class="d-flex justify-content-sm-center">
+	<a class="btn btn-primary" th:href="@{/nuevaEstanteria/} + ${estanciaId}" role="button" th:text="#{boton.nueva}" 
+	th:title="#{title.boton.estanteria.nueva}" th:alt="#{title.boton.estanteria.nueva}"></a>
+	</div>
+
+</body>
+</html>

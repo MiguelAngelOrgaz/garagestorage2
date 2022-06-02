@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentsCabecera::header"/>
+<body>
+	<div th:replace="fragmentsCabecera::menu"></div>
+    <div class="container">
+		<div style="max-width: 580px;margin-left: 20%;">
+	        <form method="POST" class="form-general" th:object="${categoriaForm}" th:action="@{/modificarCategoria}">
+	            <h3 class="form-heading text-center p-2" th:text="#{titulo.categoria.modificar}"></h3>
+	            <input type="hidden" th:field="*{idcategoria}"/>
+	            <input type="hidden" th:field="*{usuario}"/>
+	            <input type="hidden" th:field="*{categoriashijas}"/>
+	            <div class="form-group row">
+		            <label for="inputEstancia" class="col-sm-2 col-form-label" th:text="#{etiqueta.nombre}"></label>
+				    <div class="col-sm-10">
+				    	<input type="text" th:field="*{nombre}" class="form-control" th:attr="placeholder=#{etiqueta.nombre}" autofocus="true">
+	                	<span class="has-error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+				    </div>	                
+	            </div>
+	            
+	            <div class="form-group row">
+				    <label for="inputPassword" class="col-sm-2 col-form-label" th:text="#{etiqueta.categoriaPadre}"></label>
+				    <div class="col-sm-10">
+				    	<select th:field="*{categoriapadre}" class="form-control">
+				    		 <option th:value="''" th:text="Seleccione"></option>
+      						 <option th:each="category: ${categoriasAll}" th:value="${category.idcategoria}" 
+      						 th:text="${category.nombre}" th:selected="*{categoriapadre}"></option>
+   						 </select>
+   						 <span class="has-error" th:if="${#fields.hasErrors('categoriapadre')}" th:errors="*{categoriapadre}"></span>
+				    </div>
+			  	</div>		            
+	            <div class="form-group">                
+	            </div>	
+	            <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{boton.aceptar}"></button>
+	        </form>
+		</div>
+    </div>
+
+    </body>
+</html>

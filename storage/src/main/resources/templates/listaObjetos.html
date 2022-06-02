@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragmentsCabecera::header"/>
+  <body>
+	<div th:replace="fragmentsCabecera::menu"></div>
+    <div class="container">
+    	<h3 class="form-heading text-center p-2" th:text="#{titulo.objeto.gestion}"></h3>
+	    <form method="POST" class="form-general" th:action="@{/listarObjetos}" 
+	        enctype="multipart/form-data">
+	            	           
+	            <div class="row g-8 align-items-center">
+				  <div class="col-1">
+				    <label for="inputNombre" class="col-form-label" th:text="#{etiqueta.idCaja}"></label>
+				  </div>
+				  <div class="col-2">
+				    <input type="text" name="buscadorIdCaja" th:value="${buscadorIdCaja}" class="form-control" th:attr="placeholder=#{etiqueta.idCaja}">
+				  </div>
+				  <div class="col-1">
+				    <label for="inputNombre" class="col-form-label" th:text="#{etiqueta.idObjeto}"></label>
+				  </div>
+				  <div class="col-2">
+				    <input type="text" name="buscadorIdObjeto" th:value="${buscadorIdObjeto}" class="form-control" th:attr="placeholder=#{etiqueta.idObjeto}">
+				  </div>
+				  <div class="col-1">
+				    <label for="inputHabitacion" class="col-form-label" th:text="#{etiqueta.habitacion}"></label>
+				  </div>
+				  <div class="col-3">
+				    <select name="buscadorHabitacion" class="form-control">
+				    		<option th:value="''" th:text="Seleccione"></option>
+      						 <option th:each="estancia: ${estanciasAll}" th:value="${estancia.idestancia}" 
+      						 th:text="${estancia.nombre}" th:selected="${buscadorHabitacion}==${estancia.idestancia}"></option>
+   						 </select>
+				  </div>
+				</div>
+	            <br>
+				<div class="row g-8 align-items-center">
+				  <div class="col-1">
+				    <label for="inputNombre" class="col-form-label" th:text="#{etiqueta.nombre}"></label>
+				  </div>
+				  <div class="col-4">
+				    <input type="text" name="buscadorNombre" th:value="${buscadorNombre}" class="form-control" th:attr="placeholder=#{etiqueta.nombre}">
+				  </div>
+				  <div class="col-1">
+				    <label for="inputBalda" class="col-form-label" th:text="#{etiqueta.balda}"></label>
+				  </div>
+				  <div class="col-2">
+				    <input type="text" name="buscadorBalda" th:value="${buscadorBalda}" class="form-control" th:attr="placeholder=#{etiqueta.balda}">
+				  </div>
+				  <div class="col-1">
+				    <label for="inputEstanteria" class="col-form-label" th:text="#{etiqueta.estanteria}"></label>
+				  </div>
+				  <div class="col-3">
+				    <select name="buscadorEstanteria" class="form-control">
+				    		<option th:value="''" th:text="Seleccione"></option>
+      						 <option th:each="estanteria: ${estanteriasAll}" th:value="${estanteria.idestanteria}" 
+      						 th:text="${estanteria.nombre}" th:selected="${buscadorEstanteria}==${estanteria.idestanteria}"></option>
+   						 </select>
+				  </div>
+				</div>
+				<br>
+				<div class="d-flex justify-content-sm-center">
+	            <button class="btn btn-primary" type="submit" th:text="#{boton.buscar}" th:title="#{boton.buscar}"></button>
+	            </div>
+		</form>
+    </div>
+    <br>
+    <div class="container">
+		<table class="table">
+			<thead class="table-garaje">
+				<tr>
+					<th scope="col" th:text="#{etiqueta.idObjeto}"></th>
+					<th scope="col" th:text="#{etiqueta.nombre}"></th>
+					<th scope="col" th:text="#{etiqueta.categoria}"></th>
+					<th scope="col" th:text="#{etiqueta.estanteria}"></th>
+					<th scope="col" th:text="#{etiqueta.balda}"></th>
+					<th scope="col" th:text="#{etiqueta.posicion}"></th>
+					<th scope="col" th:text="#{etiqueta.caja}"></th>
+					<th scope="col" class="opciones" th:text="#{etiqueta.opciones}"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${objetosForm.empty}">
+					<td colspan="8" style="text-align: center;">No hay objetos disponibles</td>
+				</tr>
+				<tr th:each="objeto : ${objetosForm}">
+					<td th:text="${objeto.idobjeto}"></td>
+					<td th:text="${objeto.nombre}"></td>
+					<td th:text="${objeto.categoria.nombre}"></td>
+					<td th:text="${objeto.caja?.balda?.estanteria?.nombre}"></td>
+					<td th:text="${objeto.caja?.balda?.posicion}"></td>
+					<td th:text="${objeto.posicion}"></td>
+					<td th:text="${objeto.caja?.idcaja}"></td>
+					<td>
+					<a th:href="@{/obtenerObjeto/} + ${objeto.idobjeto}">
+					<img th:src="@{/images/detalle20.png}" id="imagen" class="img-circle" 
+					th:title="#{title.objeto.detalle}" th:alt="#{title.objeto.detalle}"/>
+					</a>&nbsp;
+					<a th:href="@{/modificarObjeto/} + ${objeto.idobjeto}">
+					<img th:src="@{/images/editar20.png}" id="imagen" class="img-circle" 
+					th:title="#{title.objeto.modificar}" th:alt="#{title.objeto.modificar}"/>
+					</a>&nbsp;
+					<div style="display: inline-block;" th:if="${objeto.caja != null}">
+						<a th:href="@{/sacarObjetoDeCaja/} + ${objeto.idobjeto}">
+						<img th:src="@{/images/cajacerrada20.png}" id="imagen" class="img-circle" 
+						th:title="#{title.boton.objeto.sacarCaja}" th:alt="#{title.boton.objeto.sacarCaja}"/>
+						</a>&nbsp;
+					</div>
+					<div style="display: inline-block;" th:if="${objeto.caja == null}">
+						<a th:href="@{/insertarEnCaja/} + ${objeto.idobjeto}">
+						<img th:src="@{/images/cajaabierta20.png}" id="imagen" class="img-circle" 
+						th:title="#{title.boton.objeto.insertarCaja}" th:alt="#{title.boton.objeto.insertarCaja}"/>
+						</a>&nbsp;
+					</div>
+					<a th:href="@{/eliminarObjeto/} + ${objeto.idobjeto}">
+					<img th:src="@{/images/eliminar20.png}" id="imagen" class="img-circle" 
+					th:title="#{title.objeto.eliminar}" th:alt="#{title.objeto.eliminar}"/>
+					</a></td>
+				</tr>
+			</tbody>
+
+		</table>
+		
+
+	</div>
+	<div class="d-flex justify-content-sm-center">
+		<a class="btn btn-primary" th:href="@{nuevoObjeto}" role="button" th:text="#{boton.nuevo}" 
+		th:title="#{title.boton.objeto.nuevo}" th:alt="#{title.boton.objeto.nuevo}"></a>
+	</div>
+ </body>
+</html>

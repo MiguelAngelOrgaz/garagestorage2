@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentsCabecera::header"/>
+<body>
+	<div th:replace="fragmentsCabecera::menu"></div>
+	<div class="container">
+		<h3 class="form-heading text-center p-2" th:text="#{titulo.categorias}"></h3>
+	</div>
+	<div class="container" style="width: 60%;">
+		 <div th:each="categoria : ${categoriasForm}">
+		 	<div style="display: inline-block;">
+			 	<a th:href="@{/modificarCategoria/} + ${categoria.idcategoria}">
+				 	<img th:src="@{/images/editar20.png}" name="imagenEliminar" id="imagenEliminar" 
+							th:title="#{etiqueta.categoria.modificar}" th:alt="#{etiqueta.categoria.modificar}"/>
+				</a>
+		 		<label for="inputNombre" th:text="${categoria.nombre}"></label>
+		 	</div>
+		 	<div style="display: inline-block;" th:if="${categoria.visible}">
+		 			<a th:href="@{/ocultarCategoria/} + ${categoria.idcategoria}">
+				 		<img th:src="@{/images/ver20.png}" name="imagenMostrar" id="imagenMostrar" 
+							th:title="#{etiqueta.categoria.image.ocultar}" th:alt="#{etiqueta.categoria.image.ocultar}"/>
+					</a>
+				</div>
+				<div style="display: inline-block;" th:if="not ${categoria.visible}">
+		 			<a th:href="@{/mostrarCategoria/} + ${categoria.idcategoria}">
+				 		<img th:src="@{/images/ocultar20.png}" name="imagenMostrar" id="imagenMostrar" 
+							th:title="#{etiqueta.categoria.image.mostrar}" th:alt="#{etiqueta.categoria.image.mostrar}"/>
+					</a>
+				</div>
+		 	<div th:each="subcategoria : ${categoria.categoriashijas}" class="subListaCat">		 		
+		 		<div style="display: inline-block;">
+			 		<a th:href="@{/modificarCategoria/} + ${subcategoria.idcategoria}">
+				 		<img th:src="@{/images/editar20.png}" name="imagenEliminar" id="imagenEliminar" 
+							th:title="#{etiqueta.objeto.image.eliminar}" th:alt="#{etiqueta.objeto.image.eliminar}"/>
+					</a>
+		 			<label for="inputNombre"  th:text="${subcategoria.nombre}"></label>
+		 		</div>
+		 		<div style="display: inline-block;" th:if="${subcategoria.visible}">
+		 			<a th:href="@{/ocultarCategoria/} + ${subcategoria.idcategoria}">
+				 		<img th:src="@{/images/ver20.png}" name="imagenMostrar" id="imagenMostrar" 
+							th:title="#{etiqueta.categoria.image.ocultar}" th:alt="#{etiqueta.categoria.image.ocultar}"/>
+					</a>
+				</div>
+				<div style="display: inline-block;" th:if="not ${subcategoria.visible}">
+		 			<a th:href="@{/mostrarCategoria/} + ${subcategoria.idcategoria}">
+				 		<img th:src="@{/images/ocultar20.png}" name="imagenMostrar" id="imagenMostrar" 
+							th:title="#{etiqueta.categoria.image.mostrar}" th:alt="#{etiqueta.categoria.image.mostrar}"/>
+					</a>
+				</div>
+		 	</div>
+		 </div>
+	</div>
+	<div class="d-flex justify-content-sm-center">
+	<a class="btn btn-primary" href="/nuevaCategoria" role="button" th:text="#{boton.nueva}" 
+	th:title="#{title.boton.categoria.nueva}" th:alt="#{title.boton.categoria.nueva}"></a>
+	</div>
+</body>
+</html>

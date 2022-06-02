@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentsCabecera::header"/>
+<body>
+	<div th:replace="fragmentsCabecera::menu"></div>
+	<div class="container">
+		<h3 class="form-heading text-center p-2"
+			th:text="${estanteria.nombre}+@{&nbsp;-&nbsp;}+${estanteria.estancia.nombre}"></h3>
+	</div>
+	<h5 class="form-heading text-center p-2 has-error" th:if="${error}!=null" th:text="${error}"></h5>
+	<div class="container">
+		<table style="margin: 1em auto;">
+			<tbody>
+				<tr th:each="balda : ${estanteria.baldas}">
+					<td style="padding-right: 0.5em;"><a
+						th:href="@{/eliminarBalda/} + ${balda.idbalda}"> <img
+							th:src="@{/images/eliminar20.png}" id="imagen" class="img-circle"
+							th:title="#{title.boton.balda.sacarCaja}"
+							th:alt="#{title.boton.balda.sacarCaja}" />
+					</a></td>
+					<td style="padding: 0.25em; border: 7px solid;">
+						<table style="min-width: 10em;">
+							<tr>
+								<td style="text-align:center;" th:each="caja : ${balda.cajas}"><a
+									th:href="@{/obtenerCaja/} + ${caja.idcaja}"> <img
+										th:src="@{/images/cajacerrada.png}" id="imagen"
+										class="img-circle" th:title="#{title.boton.caja.detalle}"
+										th:alt="#{title.boton.caja.detalle}" />
+								</a>&nbsp;</td>
+								<td th:if="not ${balda.llena}"><a  th:href="@{/cajasParaBalda/} + ${balda.idbalda}">
+										<img th:src="@{/images/asociar.png}" id="imagen"
+										class="img-circle"
+										th:title="#{title.boton.balda.insertarCaja}"
+										th:alt="#{title.boton.balda.insertarCaja}" />
+								</a>&nbsp;</td>
+							</tr>
+							<tr>
+								<td style="text-align: center;"
+									th:each="caja : ${balda.cajas}"><a
+									th:href="@{/sacarDeBalda/} + ${caja.idcaja}"> <img
+										th:src="@{/images/eliminar20.png}" id="imagen"
+										class="img-circle" th:title="#{title.boton.balda.sacarCaja}"
+										th:alt="#{title.boton.balda.sacarCaja}" />
+								</a></td>
+							</tr>
+						</table>
+					<td style="padding-left: 0.5em;"><input type="checkbox"
+						name="llena" th:checked="${balda.llena}"
+						th:onclick="'window.location.href=\'/baldaLlena/' + ${balda.idbalda} + '\''">
+						<label for="inputLlena" class="col-sm-2 col-form-label"
+						th:text="#{etiqueta.balda.llena}"></label>
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
+
+
+	</div>
+	<div class="d-flex justify-content-sm-center"
+		style="padding-right: 4em;">
+		<form method="POST" th:action="@{/nuevaBalda}">
+			<input type="hidden" id="idEstanteria"
+				th:value="${estanteria.idestanteria}" name="idEstanteria" />
+			<button class="btn btn-primary" type="submit"
+				th:text="#{boton.nuevaBalda}"
+				th:title="#{title.boton.estanteria.balda}"></button>
+		</form>
+	</div>
+</body>
+</html>

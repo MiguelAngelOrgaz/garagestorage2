@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="LOG_HOME" source="logging.path" defaultValue="/garage/logs"/>
+    <springProperty scope="context" name="LOG_ROOT_LEVEL" source="logging.level.root" defaultValue="DEBUG"/>
+    <springProperty scope="context" name="STDOUT" source="log.stdout" defaultValue="STDOUT"/>
+    <property name="LOG_PREFIX" value="garageStoragelog" />
+    <property name="LOG_CHARSET" value="UTF-8" />
+    <property name="LOG_DIR" value="${LOG_HOME}/%d{yyyyMMdd}" />
+    <property name="LOG_MSG" value="[%d{yyyyMMdd HH:mm:ss.SSS}] | [%level] | [%thread] | [%logger] | - %msg%n "/>
+    <property name="MAX_FILE_SIZE" value="5MB" />
+    <property name="MAX_HISTORY" value="20"/>
+ 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">           
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_MSG}</pattern>
+        </layout>
+    </appender>
+ 
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <OnMismatch>DENY</OnMismatch>
+            <OnMatch>ACCEPT</OnMatch>
+        </filter>
+        <File>${LOG_HOME}/${LOG_PREFIX}.log</File>
+                    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_DIR}/${LOG_PREFIX}%i.log</FileNamePattern>
+            <MaxHistory>${MAX_HISTORY}</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+ 
+   
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_MSG}</pattern>
+        </layout>
+    </appender>
+   
+   
+    <root level="${LOG_ROOT_LEVEL}">
+        <appender-ref ref="${STDOUT}"/>           
+        <appender-ref ref="FILE"/>        
+    </root>
+ 
+</configuration>

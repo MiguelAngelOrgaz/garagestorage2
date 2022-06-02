@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragmentsCabecera::header"/>
+  <script src="/js/eliminarImagen.js" type="text/javascript"></script>
+
+  <body>
+    <div class="container">
+    	<div th:replace="fragmentsCabecera::menu"></div>
+		<div style="max-width: 580px;margin-left: 20%;">
+	        <form method="POST" class="form-general" th:object="${cajaForm}" th:action="@{/modificarCaja}" 
+	        enctype="multipart/form-data">
+	        	<input type="hidden" id="idEstanteria" th:value="${idEstanteria}" name="idEstanteria"/>
+	        	<input type="hidden" th:field="*{idcaja}"/>
+	        	<input type="hidden" th:field="*{usuario}"/>
+	        	<input type="hidden" th:field="*{foto}"/>
+	        	<input type="hidden" id="eliminarImagen" th:value="${contentImage != null}?N:S" name="eliminarImagen"/>
+	            <h3 class="form-heading text-center p-2" th:text="#{title.caja.modificar}"></h3>	            
+	            <div class="form-group row">
+				    <label for="inputDescripcion" class="col-sm-2 col-form-label" th:text="#{etiqueta.descripcion}"></label>
+				    <div class="col-sm-10">
+				    <input type="text" th:field="*{descripcion}" class="form-control" th:attr="placeholder=#{etiqueta.descripcion}"
+	                       autofocus="true">
+				    	<span class="has-error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></span>
+				    </div>
+			  	</div>	
+			  	<div th:if="${contentImage != null}" style="text-align: center;">
+			  		<img id="imagenGuardada" style="max-width: 150px;" th:src="@{data:image;base64,}+${contentImage}"/>
+			  		<img th:src="@{/images/eliminar20.png}" name="imagen2" id="imagen2" class="imgagen2" 
+					th:title="#{title.estancia.eliminar}" th:alt="#{title.estancia.eliminar}"/>
+			  	</div>		  	
+	            <br>
+	            <div class="form-group row">
+				    <label for="imagen" class="col-sm-2 col-form-label" th:text="#{etiqueta.imagen}"></label>
+				    <div class="col-sm-10">
+				    <input type="file" name="file" id="imagen" class="form-control">
+				    	<span class="has-error" th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}"></span>				    	
+				    </div>
+			  	</div>	
+	
+	            <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{boton.aceptar}"></button>
+	        </form>
+		</div>
+    </div>
+
+ </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentsCabecera::header"/>
+
+
+ <script src="/js/qrcode.js"></script>
+ 
+
+<body>
+	<div th:replace="fragmentsCabecera::menu"></div>
+	
+	<div class="container">
+		<div style="max-width: 580px; margin-left: 20%;">
+			<form method="POST" class="form-general" th:object="${cajaForm}"
+				enctype="multipart/form-data">
+				<input type="hidden" id="idCaja" th:value="*{idcaja}" name="idCaja"/>
+				<h3 class="form-heading text-center p-2"
+					th:text="#{title.caja.detalle}"></h3>
+				<div class="form-group row">
+					<label for="inputDescripcion" class="col-sm-2 col-form-label"
+						th:text="#{etiqueta.descripcion}"></label>
+					<div class="col-sm-10">
+						<input type="text" th:field="*{descripcion}" class="form-control"
+							th:attr="placeholder=#{etiqueta.descripcion}" readonly="readonly">
+					</div>
+				</div>
+				<div th:if="${contentImage != null}" style="text-align: center;">
+					<img id="imagenGuardada" style="max-width: 150px;"
+						th:src="@{data:image;base64,}+${contentImage}" />
+				</div>
+				<br>
+			</form>
+		</div>
+	</div>
+	<br>
+	<div class="container" style="text-align: -webkit-center;margin-right: 20%;">
+		<div id="qrcode"></div>
+		<script type="text/javascript">
+			var qrcode = new QRCode(document.getElementById("qrcode"), {
+		    text: "http://localhost:8080/obtenerCaja/"+document.getElementById("idCaja").value,
+		    width: 128,
+		    height: 128,
+		    colorDark : "#000000",
+		    colorLight : "#ffffff",
+		    correctLevel : QRCode.CorrectLevel.H
+		});
+		</script>
+	</div>
+	<br>
+	<div  class="container">
+		<div style="max-width: 580px; margin-left: 20%;">
+			<table class="table">
+				<thead class="table-garaje">
+					<tr>
+						<th scope="col" th:text="#{etiqueta.idObjeto}"></th>
+						<th scope="col" th:text="#{etiqueta.nombre}"></th>
+						<th scope="col" th:text="#{etiqueta.categoria}"></th>
+						<th scope="col" class="opciones" th:text="#{etiqueta.opciones}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${cajaForm.objetos.empty}">
+						<td colspan="8" style="text-align: center;">No hay objetos en la caja</td>
+					</tr>
+					<tr th:each="objeto : ${cajaForm.objetos}">
+						<td th:text="${objeto.idobjeto}"></td>
+						<td th:text="${objeto.nombre}"></td>
+						<td th:text="${objeto.categoria.nombre}"></td>
+						<td><a th:href="@{/obtenerObjeto/} + ${objeto.idobjeto}">
+								<img th:src="@{/images/detalle20.png}" id="imagen"
+								class="img-circle" th:title="#{title.objeto.detalle}"
+								th:alt="#{title.objeto.detalle}" />
+						</a>&nbsp;</td>
+					</tr>
+				</tbody>
+	
+			</table>
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragmentsCabecera::header"/>
+  <script src="/js/eliminarImagen.js" type="text/javascript"></script>
+  <body>
+	<div th:replace="fragmentsCabecera::menu"></div>
+    <div class="container">
+	        <form method="POST" class="form-general" th:object="${objetoForm}" th:action="@{/modificarObjeto}" 
+	        enctype="multipart/form-data">
+	            <h3 class="form-heading text-center p-2" th:text="#{titulo.objeto.modificar}"></h3>	   
+	            <input type="hidden" th:field="*{idobjeto}"/>
+	        	<input type="hidden" th:field="*{usuarioObjeto}"/>
+	        	<input type="hidden" th:field="*{foto}"/>
+	        	<input type="hidden" id="eliminarImagen" th:value="${contentImage != null}?N:S" name="eliminarImagen"/>         
+	            <div class="row g-4 align-items-center">
+				  <div class="col-2">
+				    <label for="inputNombre" class="col-form-label" th:text="#{etiqueta.nombre}"></label>
+				  </div>
+				  <div class="col-4">
+				    <input type="text" th:field="*{nombre}" class="form-control" th:attr="placeholder=#{etiqueta.nombre}"
+	                       autofocus="true">
+	                	<span class="has-error" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+				  </div>
+				  <div class="col-2">
+				    <label for="inputDescripcion" class="col-form-label" th:text="#{etiqueta.descripcion}"></label>
+				  </div>
+				  <div class="col-4">
+				    <textarea class="form-control" th:field="*{descripcion}" th:attr="placeholder=#{etiqueta.descripcion}" rows="3"></textarea>
+	                	<span class="has-error" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></span>
+				  </div>
+				</div>
+	            <br>
+				<div class="row g-4 align-items-center">
+				  <div class="col-2">
+				    <label for="inputCategoria" class="col-form-label" th:text="#{etiqueta.categoria}"></label>
+				  </div>
+				  <div class="col-4">
+				    <select th:field="*{categoria}" class="form-control">
+				    		<option th:value="''" th:text="Seleccione"></option>
+      						 <option th:each="category: ${categoriasAll}" th:value="${category.idcategoria}" 
+      						 th:text="${category.nombre}" th:selected="*{categoria}"></option>
+   						 </select>
+	                	<span class="has-error" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></span>
+				  </div>
+				  <div class="col-2">
+				    <label for="inputMarca" class="col-form-label" th:text="#{etiqueta.marca}"></label>
+				  </div>
+				  <div class="col-4">
+				    <input type="text" th:field="*{marca}" class="form-control" th:attr="placeholder=#{etiqueta.marca}">
+	                	<span class="has-error" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"></span>
+				  </div>
+				</div> 
+				<br>
+				<div th:if="${contentImage != null}" style="text-align: center;">
+			  		<img id="imagenGuardada" style="max-width: 150px;" th:src="@{data:image;base64,}+${contentImage}"/>
+			  		<img th:src="@{/images/eliminar20.png}" name="imagenEliminar" id="imagenEliminar" 
+					th:title="#{etiqueta.objeto.image.eliminar}" th:alt="#{etiqueta.objeto.image.eliminar}"/>
+			  	</div>		  	
+	            <br>
+				<div class="row g-2 align-items-center">
+				  <div class="col-2">
+				    <label for="inputImagen" class="col-form-label" th:text="#{etiqueta.imagen}"></label>
+				  </div>
+				  <div class="col">
+				    <input type="file" name="file" id="imagen" class="form-control">
+				    	<span class="has-error" th:if="${#fields.hasErrors('foto')}" th:errors="*{foto}"></span>
+				  </div>
+				</div>
+				<br>
+	            <button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{boton.aceptar}"></button>
+	        </form>
+    </div>
+
+  </body>
+</html>
